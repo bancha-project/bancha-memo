@@ -1,16 +1,25 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
+import { Action, getModule, Module, Mutation, VuexModule } from 'vuex-module-decorators'
 
 Vue.use(Vuex)
 
-export default new Vuex.Store({
-  state: {
+const store = new Vuex.Store({})
+export default store
 
-  },
-  mutations: {
+@Module({ store, dynamic: true,  name: 'test' })
+class StoreModule extends VuexModule {
+    public count = 0
 
-  },
-  actions: {
+    @Mutation
+    public addCount(delta: number) {
+        this.count += delta
+    }
 
-  },
-})
+    @Action
+    public increment() {
+        this.addCount(1)
+    }
+}
+
+export const appStore = getModule(StoreModule)
