@@ -5,7 +5,7 @@
         Main
         footer
             hr
-            small bancha project
+            small &copy; 2019 bancha project
 </template>
 
 <script lang="ts">
