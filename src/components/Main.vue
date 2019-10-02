@@ -1,12 +1,8 @@
-<template>
-    <div>
-        <button @click="load">load</button>
-        <ul>
-            <li v-for="value, key in yaml">
-                {{ key }}: {{ value }}
-            </li>
-        </ul>
-    </div>
+<template lang="pug">
+    div
+        button(@click="load") load
+        ul
+            li(v-for="value, key in yaml") {{ key }}: {{ value }}
 </template>
 
 <script lang="ts">
