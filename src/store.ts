@@ -20,7 +20,7 @@ class StoreModule extends VuexModule {
     }
 
     @Action
-    loadYamlFromFile() {
+    public loadYamlFromFile() {
         const dialog = require('electron').remote.dialog
         const filepaths = dialog.showOpenDialogSync({
             properties: ['openFile'],
@@ -30,6 +30,14 @@ class StoreModule extends VuexModule {
         })
         const txt = fs.readFileSync(filepaths![0], 'utf8')
         this.setYaml(jsYaml.safeLoad(txt))
+    }
+
+    @Action
+    public copy(s: string) {
+        const copyArea = document.getElementById('copy-area')! as HTMLInputElement
+        copyArea.value = s
+        copyArea.select()
+        document.execCommand('copy')
     }
 }
 
