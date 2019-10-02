@@ -87,8 +87,3 @@ if (isDevelopment) {
     })
   }
 }
-
-ipcMain.on('message', (event, arg) => { // イベントバインディング
-  console.log(arg)  // prints "ping"
-})
-
