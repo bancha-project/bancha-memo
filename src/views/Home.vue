@@ -9,6 +9,7 @@
   import { Component, Vue } from 'vue-property-decorator'
   import HelloWorld from '@/components/HelloWorld.vue'
   import fs from 'fs'
+  import jsYaml from 'js-yaml'
 
   @Component({
     components: {
@@ -18,6 +19,8 @@
   export default class Home extends Vue {
     private mounted() {
       const txt = fs.readFileSync('memo.yml', 'utf8')
+      const yaml = jsYaml.safeLoad(txt)
+      console.log(yaml)
     }
   }
 </script>
