@@ -1,24 +1,35 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 import { Action, getModule, Module, Mutation, VuexModule } from 'vuex-module-decorators'
+import fs from 'fs'
+import jsYaml from 'js-yaml'
 
 Vue.use(Vuex)
 
 const store = new Vuex.Store({})
 export default store
 
-@Module({ store, dynamic: true,  name: 'test' })
+@Module({ store, dynamic: true,  name: 'storeModule' })
 class StoreModule extends VuexModule {
-    public count = 0
+
+    public yaml = {}
 
     @Mutation
-    public addCount(delta: number) {
-        this.count += delta
+    public setYaml(yaml: any) {
+        this.yaml = yaml
     }
 
     @Action
-    public increment() {
-        this.addCount(1)
+    loadYamlFromFile() {
+        const dialog = require('electron').remote.dialog
+        const filepaths = dialog.showOpenDialogSync({
+            properties: ['openFile'],
+            title: 'Select a text file',
+            defaultPath: '.',
+
+        })
+        const txt = fs.readFileSync(filepaths![0], 'utf8')
+        this.setYaml(jsYaml.safeLoad(txt))
     }
 }
 
