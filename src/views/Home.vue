@@ -1,5 +1,7 @@
 <template>
   <div class="home">
+    <p>test test</p>
+    <button @click="load">load</button>
     <ul>
       <li v-for="value, key in yaml">
         {{ key }}, {{ value }}
@@ -17,7 +19,7 @@
   export default class Home extends Vue {
     private yaml = {}
 
-    private mounted() {
+    private load() {
       const txt = fs.readFileSync('memo.yml', 'utf8')
       this.yaml = jsYaml.safeLoad(txt)
     }
