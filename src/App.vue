@@ -10,6 +10,7 @@
     import Header from '@/components/Header.vue'
     import Main from '@/components/Main.vue'
     import Footer from '@/components/Footer.vue'
+    import { appStore } from '@/store'
 
     @Component({
         components: {
@@ -18,7 +19,11 @@
             Footer,
         },
     })
-    export default class App extends Vue {}
+    export default class App extends Vue {
+        private mounted() {
+            appStore.init()
+        }
+    }
 </script>
 
 <style lang="scss">

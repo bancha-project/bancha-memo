@@ -16,7 +16,14 @@
     export default class Header extends Vue {
 
         private load() {
-            appStore.loadYamlFromFile()
+            const dialog = require('electron').remote.dialog
+            const filepaths = dialog.showOpenDialogSync({
+                properties: ['openFile'],
+                title: 'Select a text file',
+                defaultPath: '.',
+            })
+            const filepath = filepaths![0]
+            appStore.loadYamlFromFile(filepath)
         }
     }
 </script>

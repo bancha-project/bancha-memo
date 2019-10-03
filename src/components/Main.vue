@@ -1,13 +1,15 @@
 <template lang="pug">
     main.container.pt-20
         input#copy-area.hidden(type="text")
-        .field(v-for="value, key in yaml")
-            label.label.ml-10.mt-20 {{ key }}
-            .control
-                .is-inline-block
-                    font-awesome-icon.hover-grey(icon="copy" @click="() => { copy(value) }" size="lg")
-                .is-inline-block.ml-10
-                    input.input(type="text" :value="value" readonly)
+        .box.mb-10(v-for="itemGroup in itemGroups")
+            p.title.is-4 {{ itemGroup.name }}
+            .field(v-for="item in itemGroup.items")
+                label.label.ml-10.mt-20 {{ item.key }}
+                .control
+                    .is-inline-block
+                        font-awesome-icon.hover-grey(icon="copy" @click="() => { copy(item.value) }" size="lg")
+                    .is-inline-block.ml-10
+                        input.input(type="text" :value="item.value" readonly)
 </template>
 
 <script lang="ts">
@@ -17,12 +19,8 @@
     @Component
     export default class Main extends Vue {
 
-        get yaml() {
-            return appStore.yaml
-        }
-
-        private load() {
-            appStore.loadYamlFromFile()
+        get itemGroups() {
+            return appStore.itemGroups
         }
 
         private copy(s: string) {

@@ -16,6 +16,7 @@
     "@fortawesome/vue-fontawesome": "^0.1.7",
     "bulma": "^0.7.5",
     "core-js": "^2.6.5",
+    "electron-store": "^5.0.0",
     "js-yaml": "^3.13.1",
     "vue": "^2.6.10",
     "vue-class-component": "^7.0.2",
