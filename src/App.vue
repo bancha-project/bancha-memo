@@ -4,7 +4,10 @@
             section.hero.is-dark
                 .hero-body
                     .container
-                        h1.title bancha memo
+                        h1.title
+                            span bancha memo
+                            font-awesome-icon.ml-10(icon="folder-open")
+                            font-awesome-icon.ml-10(icon="file")
                         h2.subtitle copy memo quickly
         Main
         footer
@@ -26,4 +29,7 @@
 
 <style lang="scss">
     @import "../node_modules/bulma/bulma.sass";
+    .ml-10 {
+        margin-left: 10px;
+    }
 </style>

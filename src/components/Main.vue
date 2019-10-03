@@ -1,5 +1,9 @@
 <template lang="pug">
     div
+        button(@click="load")
+            font-awesome-icon(icon="folder-open" size="3x")
+        button
+            font-awesome-icon(icon="file" size="3x")
         button(@click="load") load
         input#copy-area.hidden(type="text")
         ul
