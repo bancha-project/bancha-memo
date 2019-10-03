@@ -11,6 +11,7 @@
   },
   "main": "background.js",
   "dependencies": {
+    "bulma": "^0.7.5",
     "core-js": "^2.6.5",
     "js-yaml": "^3.13.1",
     "vue": "^2.6.10",

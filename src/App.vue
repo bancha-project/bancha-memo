@@ -1,7 +1,11 @@
 <template lang="pug">
     #app
         header
-            h1 bancha-memo
+            section.hero.is-dark
+                .hero-body
+                    .container
+                        h1.title bancha memo
+                        h2.subtitle copy memo quickly
         Main
         footer
             hr
@@ -19,3 +23,7 @@
     })
     export default class App extends Vue {}
 </script>
+
+<style lang="scss">
+    @import "../node_modules/bulma/bulma.sass";
+</style>

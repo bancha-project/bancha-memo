@@ -2,13 +2,10 @@
     div
         button(@click="load") load
         input#copy-area.hidden(type="text")
-        div
-            span ID: ahyaemon
-            button(@click="() => { copy('ahyaemon') }") copy
         ul
-            li(v-for="value, key in yaml")
+           li(v-for="value, key in yaml")
                 span {{ key }}: {{ value }}
-                button copy
+                button(@click="() => { copy(value) }") copy
 </template>
 
 <script lang="ts">
