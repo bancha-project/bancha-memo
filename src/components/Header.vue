@@ -5,7 +5,6 @@
                 h1.title
                     span bancha memo
                     font-awesome-icon.hover-grey.ml-10(icon="folder-open" @click="load")
-                    font-awesome-icon.hover-grey.ml-10(icon="file")
                 h2.subtitle copy memo quickly
 </template>
 
