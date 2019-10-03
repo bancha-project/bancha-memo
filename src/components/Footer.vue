@@ -1,7 +1,7 @@
 <template lang="pug">
-    div
-        hr
-        small &copy; 2019 bancha project
+    footer.footer
+        .content.has-text-centered
+            small &copy; 2019 bancha project
 </template>
 
 <script lang="ts">

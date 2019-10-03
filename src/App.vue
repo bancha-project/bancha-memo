@@ -1,11 +1,8 @@
 <template lang="pug">
     #app
-        header
-            Header
-        main
-            Main
-        footer
-            Footer
+        Header
+        Main
+        Footer
 </template>
 
 <script lang="ts">
@@ -25,8 +22,22 @@
 </script>
 
 <style lang="scss">
+    $footer-background-color: white;
     @import "../node_modules/bulma/bulma.sass";
+
+    .pt-20 {
+        padding-top: 20px;
+    }
+
     .ml-10 {
         margin-left: 10px;
+    }
+
+    .mt-20 {
+        margin-top: 20px;
+    }
+
+    .hover-grey:hover {
+        color: grey;
     }
 </style>

@@ -1,10 +1,13 @@
 <template lang="pug">
-    div
+    main.container.pt-20
         input#copy-area.hidden(type="text")
-        ul
-           li(v-for="value, key in yaml")
-                span {{ key }}: {{ value }}
-                button(@click="() => { copy(value) }") copy
+        .field(v-for="value, key in yaml")
+            label.label.ml-10.mt-20 {{ key }}
+            .control
+                .is-inline-block
+                    font-awesome-icon.hover-grey(icon="copy" @click="() => { copy(value) }" size="lg")
+                .is-inline-block.ml-10
+                    input.input(type="text" :value="value" readonly)
 </template>
 
 <script lang="ts">
