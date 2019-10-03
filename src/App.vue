@@ -42,6 +42,10 @@
         margin-top: 20px;
     }
 
+    .mb-20 {
+        margin-bottom: 20px;
+    }
+
     .hover-grey:hover {
         color: grey;
     }

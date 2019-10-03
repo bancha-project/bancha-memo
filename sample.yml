@@ -5,7 +5,7 @@ site1:
 site2:
   ID: ahyaemon
   Password: MyPassword
-  URL: https://ahyaemon.com
+  URL: https://ahyaemon.com/aaa/bbb/ccc/ddd/eee/fff
 site3:
   ID: ahyaemon
   Password: MyPassword
