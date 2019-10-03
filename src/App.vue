@@ -1,27 +1,24 @@
 <template lang="pug">
     #app
         header
-            section.hero.is-dark
-                .hero-body
-                    .container
-                        h1.title
-                            span bancha memo
-                            font-awesome-icon.ml-10(icon="folder-open")
-                            font-awesome-icon.ml-10(icon="file")
-                        h2.subtitle copy memo quickly
-        Main
+            Header
+        main
+            Main
         footer
-            hr
-            small &copy; 2019 bancha project
+            Footer
 </template>
 
 <script lang="ts">
     import { Component, Vue } from 'vue-property-decorator'
+    import Header from '@/components/Header.vue'
     import Main from '@/components/Main.vue'
+    import Footer from '@/components/Footer.vue'
 
     @Component({
         components: {
+            Header,
             Main,
+            Footer,
         },
     })
     export default class App extends Vue {}

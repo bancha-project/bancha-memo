@@ -1,10 +1,5 @@
 <template lang="pug">
     div
-        button(@click="load")
-            font-awesome-icon(icon="folder-open" size="3x")
-        button
-            font-awesome-icon(icon="file" size="3x")
-        button(@click="load") load
         input#copy-area.hidden(type="text")
         ul
            li(v-for="value, key in yaml")
@@ -17,7 +12,7 @@
     import { appStore } from '@/store'
 
     @Component
-    export default class Hello extends Vue {
+    export default class Main extends Vue {
 
         get yaml() {
             return appStore.yaml
