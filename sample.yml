@@ -1,12 +1,16 @@
 site1:
-  ID: ahyaemon
-  Password: MyPassword
-  URL: https://ahyaemon.com
-site2:
+  aaa: testman
+  bbb: testpass
+  ccc: https://site1.com
+ahyaemon's page:
   ID: ahyaemon
   Password: MyPassword
   URL: https://ahyaemon.com/aaa/bbb/ccc/ddd/eee/fff
-site3:
+ahyaemon's super libre land:
   ID: ahyaemon
   Password: MyPassword
-  URL: https://ahyaemon.com
+  URL: https://ahyaemon.com/aaa/bbb/ccc/ddd/eee/fff
+bancha-books:
+  user: bancha
+  pass: bancha
+  uri: https://bancha-books.com

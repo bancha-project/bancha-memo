@@ -16,6 +16,7 @@ export default store
 class StoreModule extends VuexModule {
 
     public itemGroups: ItemGroup[] = []
+    public condition: string = ''
 
     private electronStore = new ElectronStore()
     private FILEPATH_KEY = 'filepath'
@@ -72,6 +73,27 @@ class StoreModule extends VuexModule {
         if (filepath) {
             this.loadYamlFromFile(filepath)
         }
+    }
+
+    @Mutation
+    public setCondition(condition: string) {
+        this.condition = condition
+    }
+
+    get filteredItemGroups(): ItemGroup[] {
+        return this.itemGroups.map( (itemGroup) => {
+            if (itemGroup.name.includes(this.condition)) {
+                return itemGroup
+            }
+            return {
+                name: itemGroup.name,
+                items: itemGroup.items.filter((item) => {
+                    return (item.key).includes(this.condition)
+                }),
+            }
+        }).filter( (itemGroup) => {
+            return itemGroup.items.length > 0
+        })
     }
 }
 
