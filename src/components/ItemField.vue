@@ -1,6 +1,6 @@
 <template lang="pug">
     .field
-        label.label.ml-10.mt-20 {{ item.key }}
+        label.label.ml-10.mt-20(v-html="key")
         .control
             .is-inline-block
                 font-awesome-icon.hover-grey(
@@ -15,6 +15,7 @@
     import anime from 'animejs'
     import Item from '@/domain/Item'
     import crypto from 'crypto'
+    import DomUtils from '@/utils/DomUtils'
 
     @Component
     export default class ItemField extends Vue {
@@ -42,6 +43,13 @@
             hash.update(this.groupName + this.item.key)
             const digest = `${hash.digest('hex')}`
             return 'copy-icon-' + digest.substring(0, 8)
+        }
+
+        get key() {
+            if (appStore.condition === '') {
+                return this.item.key
+            }
+            return DomUtils.hilightSelectedWord(this.item.key, appStore.condition)
         }
     }
 </script>
