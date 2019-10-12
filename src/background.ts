@@ -16,9 +16,18 @@ protocol.registerSchemesAsPrivileged([{scheme: 'app', privileges: { secure: true
 
 function createWindow () {
     // Create the browser window.
-    win = new BrowserWindow({ width: 1600, height: 1200, webPreferences: {
-            nodeIntegration: true
-        } })
+    const options: any = {
+        width: 1600,
+        height: 1200,
+        webPreferences: {
+            nodeIntegration: true,
+            devTools: false
+        }
+    }
+    if (isDevelopment) {
+        options.webPreferences.devTools = true
+    }
+    win = new BrowserWindow(options)
     win.webContents.on('new-window', (event, url) => {
         event.preventDefault();
         shell.openExternal(url);
