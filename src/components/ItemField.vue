@@ -7,9 +7,10 @@
                 @keydown.enter="blur"
                 :value="this.item.key"
                 v-focus
+                style="height: 26px; margin: 10px 0;"
             )
         template(v-else)
-            label.label.ml-10.mt-20(v-html="key" @click="isKeyEditMode = true")
+            label.key(v-html="key" @click="isKeyEditMode = true")
         .control
             .is-inline-block
                 font-awesome-icon.hover-grey(
@@ -21,6 +22,7 @@
                     @blur="editValueDone"
                     @focus="select"
                     @keydown.enter="blur"
+                    style="height: 26px;"
                 )
 </template>
 
@@ -97,3 +99,11 @@
         }
     }
 </script>
+
+<style>
+    .key {
+        margin-top: 10px;
+        display: block;
+        font-weight: bold;
+    }
+</style>

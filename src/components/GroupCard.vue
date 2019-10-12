@@ -1,15 +1,17 @@
 <template lang="pug">
-    .box
-        template(v-if="isTitleEditMode")
-            input.input(
-                type="text"
-                @blur="editTitleDone"
-                @keydown.enter="blur"
-                :value="this.itemGroup.name"
-                v-focus
-            )
-        template(v-else)
-            p.title.is-4(v-html="title" @click="isTitleEditMode = true")
+    .box(style="background-color: #fafafa;")
+        div
+            template(v-if="isTitleEditMode")
+                input.input(
+                    type="text"
+                    @blur="editTitleDone"
+                    @keydown.enter="blur"
+                    :value="this.itemGroup.name"
+                    v-focus
+                )
+            template(v-else)
+                p.title.is-6(@click="isTitleEditMode = true")
+                     u(v-html="title")
         div(v-for="item in itemGroup.items")
             ItemField(:groupName="itemGroup.name" :item="item")
 </template>
