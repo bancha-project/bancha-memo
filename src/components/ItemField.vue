@@ -1,12 +1,27 @@
 <template lang="pug">
     .field
-        label.label.ml-10.mt-20(v-html="key")
+        template(v-if="isKeyEditMode")
+            input.input(
+                type="text"
+                @blur="editKeyDone"
+                @keydown.enter="blur"
+                :value="this.item.key"
+                v-focus
+            )
+        template(v-else)
+            label.label.ml-10.mt-20(v-html="key" @click="isKeyEditMode = true")
         .control
             .is-inline-block
                 font-awesome-icon.hover-grey(
                     icon="copy" @click="() => { copy(item.value) }" size="lg" :id="id")
             .is-inline-block.ml-10(style="width:80%")
-                input.input(type="text" :value="item.value" readonly)
+                input.input(
+                    type="text"
+                    :value="item.value"
+                    @blur="editValueDone"
+                    @focus="select"
+                    @keydown.enter="blur"
+                )
 </template>
 
 <script lang="ts">
@@ -23,6 +38,8 @@
         @Prop() private readonly groupName!: string
 
         @Prop() private readonly item!: Item
+
+        private isKeyEditMode = false
 
         private copy(s: string) {
             anime({
@@ -50,6 +67,33 @@
                 return this.item.key
             }
             return DomUtils.hilightSelectedWord(this.item.key, appStore.condition)
+        }
+
+        private editKeyDone(e: any) {
+            this.isKeyEditMode = false
+            appStore.setItemKey({
+                itemGroupName: this.groupName,
+                prev: this.item.key,
+                after: e.target.value,
+            })
+            appStore.save()
+        }
+
+        private select(el: any) {
+            el.target.select()
+        }
+
+        private editValueDone(e: any) {
+            appStore.setItemValue({
+                itemGroupName: this.groupName,
+                prev: this.item.value,
+                after: e.target.value,
+            })
+            appStore.save()
+        }
+
+        private blur(el: any) {
+            el.target.blur()
         }
     }
 </script>

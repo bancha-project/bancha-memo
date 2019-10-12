@@ -1,11 +1,10 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 import { Action, getModule, Module, Mutation, VuexModule } from 'vuex-module-decorators'
-import fs from 'fs'
-import jsYaml from 'js-yaml'
 import ElectronStore from 'electron-store'
 import ItemGroup from '@/domain/ItemGroup'
 import Item from '@/domain/Item'
+import FileUtils from '@/utils/FileUtils'
 
 Vue.use(Vuex)
 
@@ -34,8 +33,7 @@ class StoreModule extends VuexModule {
      */
     @Action
     public loadYamlFromFile(filepath: string) {
-        const txt = fs.readFileSync(filepath, 'utf8')
-        const yaml = jsYaml.safeLoad(txt)
+        const yaml = FileUtils.loadYaml(filepath)
         const itemGroups: ItemGroup[] = []
         for (const groupKey of Object.keys(yaml)) {
             const groupValue = yaml[groupKey]
@@ -94,6 +92,63 @@ class StoreModule extends VuexModule {
         }).filter( (itemGroup) => {
             return itemGroup.items.length > 0
         })
+    }
+
+    @Mutation
+    public setItemGroupName(param: {prev: string, after: string}) {
+        const target = this.itemGroups.find((itemGroup) => {
+            return itemGroup.name === param.prev
+        })
+        if (target) {
+            target.name = param.after
+        }
+    }
+
+    @Mutation
+    public setItemKey(param: {itemGroupName: string, prev: string, after: string}) {
+        const targetItemGroup = this.itemGroups.find((itemGroup) => {
+            return itemGroup.name === param.itemGroupName
+        })
+        if (targetItemGroup) {
+            const target = targetItemGroup.items.find((item) => {
+                return item.key === param.prev
+            })
+
+            if (target) {
+                target.key = param.after
+            }
+        }
+    }
+
+    @Mutation
+    public setItemValue(param: {itemGroupName: string, prev: string, after: string}) {
+        const targetItemGroup = this.itemGroups.find((itemGroup) => {
+            return itemGroup.name === param.itemGroupName
+        })
+        if (targetItemGroup) {
+            const target = targetItemGroup.items.find((item) => {
+                return item.value === param.prev
+            })
+
+            if (target) {
+                target.value = param.after
+            }
+        }
+    }
+
+    @Action
+    public save() {
+        const filepath = this.electronStore.get(this.FILEPATH_KEY)
+
+        const itemGroupObject: any = {}
+        for (const itemGroup of this.itemGroups) {
+            const itemObject: any = {}
+            for (const item of itemGroup.items) {
+                itemObject[item.key] = item.value
+            }
+            itemGroupObject[itemGroup.name] = itemObject
+        }
+        FileUtils.saveYaml(filepath, itemGroupObject)
     }
 }
 

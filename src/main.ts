@@ -14,3 +14,11 @@ new Vue({
   store,
   render: (h) => h(App),
 }).$mount('#app')
+
+Vue.directive('focus', {
+  inserted: (el: HTMLElement) => {
+    const input = el as HTMLInputElement
+    input.focus()
+    input.select()
+  },
+})
