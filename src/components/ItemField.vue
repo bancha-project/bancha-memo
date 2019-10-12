@@ -13,8 +13,7 @@
             label.key(v-html="key" @click="isKeyEditMode = true")
         .control
             .is-inline-block
-                font-awesome-icon.hover-grey(
-                    icon="copy" @click="() => { copy(item.value) }" size="lg" :id="id")
+                font-awesome-icon(icon="copy" @click="() => { copy(item.value) }" size="lg" :id="id")
             .is-inline-block.ml-10(style="width:80%")
                 input.input(
                     type="text"
@@ -24,6 +23,9 @@
                     @keydown.enter="blur"
                     style="height: 26px;"
                 )
+            .is-inline-block.ml-10(v-if="isLink")
+                a(:href='item.value' target="_blank")
+                    font-awesome-icon(icon="external-link-alt")
 </template>
 
 <script lang="ts">
@@ -96,6 +98,10 @@
 
         private blur(el: any) {
             el.target.blur()
+        }
+
+        get isLink(): boolean {
+            return this.item.value.indexOf('http') === 0
         }
     }
 </script>

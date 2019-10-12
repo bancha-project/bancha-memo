@@ -1,6 +1,6 @@
 'use strict'
 
-import { ipcMain, app, protocol, BrowserWindow } from 'electron'
+import { ipcMain, app, protocol, BrowserWindow, shell } from 'electron'
 import {
   createProtocol,
   installVueDevtools
@@ -19,7 +19,10 @@ function createWindow () {
   win = new BrowserWindow({ width: 1600, height: 1200, webPreferences: {
     nodeIntegration: true
   } })
-
+  win.webContents.on('new-window', (event, url) => {
+    event.preventDefault();
+    shell.openExternal(url);
+  })
   if (process.env.WEBPACK_DEV_SERVER_URL) {
     // Load the url of the dev server if in development mode
     win.loadURL(process.env.WEBPACK_DEV_SERVER_URL as string)
@@ -73,6 +76,21 @@ app.on('ready', async () => {
   }
   createWindow()
 })
+
+// // Listen for web contents being created
+// app.on('web-contents-created', (e, contents) => {
+//   console.log("created")
+//   // Check for a webview
+//   if (contents.getType() == 'webview') {
+//
+//     console.log("webview")
+//     // Listen for any new window events
+//     contents.on('new-window', (e, url) => {
+//       e.preventDefault()
+//       shell.openExternal(url)
+//     })
+//   }
+// })
 
 // Exit cleanly on request from parent process in development mode.
 if (isDevelopment) {
