@@ -1,6 +1,15 @@
 <template lang="pug">
     .field
-        label.label.ml-10.mt-20(v-html="key")
+        template(v-if="isKeyEditMode")
+            input.input(
+                type="text"
+                @blur="editKeyDone"
+                @keydown.enter="blur"
+                :value="this.item.key"
+                v-focus
+            )
+        template(v-else)
+            label.label.ml-10.mt-20(v-html="key" @click="isKeyEditMode = true")
         .control
             .is-inline-block
                 font-awesome-icon.hover-grey(
@@ -23,6 +32,8 @@
         @Prop() private readonly groupName!: string
 
         @Prop() private readonly item!: Item
+
+        private isKeyEditMode = false
 
         private copy(s: string) {
             anime({
@@ -50,6 +61,20 @@
                 return this.item.key
             }
             return DomUtils.hilightSelectedWord(this.item.key, appStore.condition)
+        }
+
+        private editKeyDone(e: any) {
+            this.isKeyEditMode = false
+            appStore.setItemKey({
+                itemGroupName: this.groupName,
+                prev: this.item.key,
+                after: e.target.value,
+            })
+            appStore.save()
+        }
+
+        private blur(el: any) {
+            el.target.blur()
         }
     }
 </script>

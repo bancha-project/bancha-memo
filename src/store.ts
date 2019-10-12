@@ -104,6 +104,22 @@ class StoreModule extends VuexModule {
         }
     }
 
+    @Mutation
+    public setItemKey(param: {itemGroupName: string, prev: string, after: string}) {
+        const targetItemGroup = this.itemGroups.find((itemGroup) => {
+            return itemGroup.name === param.itemGroupName
+        })
+        if (targetItemGroup) {
+            const target = targetItemGroup.items.find((item) => {
+                return item.key === param.prev
+            })
+
+            if (target) {
+                target.key = param.after
+            }
+        }
+    }
+
     @Action
     public save() {
         const filepath = this.electronStore.get(this.FILEPATH_KEY)
