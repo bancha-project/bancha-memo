@@ -7,12 +7,12 @@ import {
   faCopy,
   faFilter,
   faExternalLinkAlt,
-  faPlus,
   faPlusCircle,
+  faTimesCircle,
 } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 
-library.add(faFolderOpen, faCopy, faFilter, faExternalLinkAlt, faPlusCircle)
+library.add(faFolderOpen, faCopy, faFilter, faExternalLinkAlt, faPlusCircle, faTimesCircle)
 Vue.component('font-awesome-icon', FontAwesomeIcon)
 
 Vue.config.productionTip = false
