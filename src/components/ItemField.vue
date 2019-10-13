@@ -47,9 +47,9 @@
     import { appStore } from '@/store'
     import anime from 'animejs'
     import Item from '@/domain/Item'
-    import crypto from 'crypto'
     import DomUtils from '@/utils/DomUtils'
     import { hurricane } from '@/utils/AnimeUtils'
+    import { calcMdDigest } from '@/utils/HashUtils'
 
     @Component
     export default class ItemField extends Vue {
@@ -60,7 +60,7 @@
 
         private isKeyEditMode = false
 
-        private isDeleteMode =false
+        private isDeleteMode = false
 
         private copy(s: string) {
             anime({ targets: `#${this.id}`, ...hurricane })
@@ -68,9 +68,7 @@
         }
 
         get id(): string {
-            const hash =  crypto.createHash('md5')
-            hash.update(this.groupName + this.item.key)
-            const digest = `${hash.digest('hex')}`
+            const digest = calcMdDigest(this.groupName + this.item.key)
             return 'copy-icon-' + digest.substring(0, 8)
         }
 
