@@ -173,6 +173,12 @@ class StoreModule extends VuexModule {
         }
     }
 
+    @Mutation
+    public deleteItemGroup(param: { itemGroupName: string }) {
+        const idx = this.itemGroups.findIndex((itemGroup) => itemGroup.name === param.itemGroupName)
+        this.itemGroups.splice(idx, 1)
+    }
+
     @Action
     public save() {
         const filepath = this.electronStore.get(this.FILEPATH_KEY)
