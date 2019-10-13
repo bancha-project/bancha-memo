@@ -14,8 +14,20 @@
                      u(v-html="title")
         div(v-for="item in itemGroup.items")
             ItemField(:groupName="itemGroup.name" :item="item")
+        div.delete-group
+            font-awesome-icon(icon="times-circle" @click="isDeleteMode = true")
         div.add-item
             font-awesome-icon(icon="plus-circle" @click="addItem")
+        .modal#delete-modal(:class="{ 'is-active': isDeleteMode}")
+            .modal-background(@click="isDeleteMode = false")
+            .modal-card
+                header.modal-card-head
+                    p.modal-card-title 削除したいというのは本当ですか？
+                section.modal-card-body
+                    p.is-size-3 {{ itemGroup.name }}
+                    p.has-text-danger ※ 削除すると永遠にあなたの元に帰って来ることはありません
+                footer.modal-card-foot
+                    button.button.is-primary(@click="deleteItem") 削除する
 
 </template>
 
@@ -35,7 +47,9 @@
 
         @Prop() private readonly itemGroup!: ItemGroup
 
-        private isTitleEditMode: boolean = false
+        private isTitleEditMode = false
+
+        private isDeleteMode = false
 
         get title() {
             if (appStore.condition === '') {
@@ -58,7 +72,12 @@
         }
 
         private addItem() {
-            appStore.addItem({itemGroupName: this.itemGroup.name})
+            appStore.addItem({ itemGroupName: this.itemGroup.name })
+            appStore.save()
+        }
+
+        private deleteItem() {
+            appStore.deleteItemGroup({ itemGroupName: this.itemGroup.name })
             appStore.save()
         }
     }
@@ -72,6 +91,13 @@
     .add-item {
         position: absolute;
         bottom: 10px;
+        right: 10px;
+    }
+
+    .delete-group {
+        color: #ff777e;
+        position: absolute;
+        top: 10px;
         right: 10px;
     }
 </style>
