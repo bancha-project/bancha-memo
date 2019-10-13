@@ -49,6 +49,7 @@
     import Item from '@/domain/Item'
     import crypto from 'crypto'
     import DomUtils from '@/utils/DomUtils'
+    import { hurricane } from '@/utils/AnimeUtils'
 
     @Component
     export default class ItemField extends Vue {
@@ -62,16 +63,7 @@
         private isDeleteMode =false
 
         private copy(s: string) {
-            anime({
-                targets: '#' + this.id,
-                scale: 2,
-                translateX: 10,
-                translateY: 10,
-                rotate: [0, 3600],
-                direction: 'alternate',
-                duration: 300,
-                easing: 'easeInOutSine',
-            })
+            anime({ targets: `#${this.id}`, ...hurricane })
             appStore.copy(s)
         }
 
