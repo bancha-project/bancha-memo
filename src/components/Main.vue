@@ -8,6 +8,8 @@
                     font-awesome-icon.hover-grey(icon="filter" size="lg")
         div.mb-20(v-for="itemGroup in itemGroups")
             GroupCard(:itemGroup="itemGroup")
+        div.add-group
+            font-awesome-icon(icon="plus-circle" size="2x" @click="addItemGroup")
 </template>
 
 <script lang="ts">
@@ -34,6 +36,11 @@
             appStore.setCondition(e.target.value)
         }
 
+        private addItemGroup() {
+            appStore.addItemGroup()
+            appStore.save()
+            scrollTo(0, window.parent.screen.height)
+        }
     }
 </script>
 
@@ -41,5 +48,12 @@
     .hidden {
         position: absolute;
         top: -200px;
+    }
+
+    .add-group {
+        color: green;
+        position: fixed;
+        bottom: 20px;
+        right: 20px;
     }
 </style>

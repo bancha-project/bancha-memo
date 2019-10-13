@@ -30,6 +30,10 @@
     $footer-background-color: white;
     @import "../node_modules/bulma/bulma.sass";
 
+    html{
+        scroll-behavior: smooth;
+    }
+
     .pt-20 {
         padding-top: 20px;
     }
