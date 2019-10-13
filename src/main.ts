@@ -2,10 +2,17 @@ import Vue from 'vue'
 import App from './App.vue'
 import store from './store'
 import { library } from '@fortawesome/fontawesome-svg-core'
-import { faFolderOpen, faCopy, faFilter, faExternalLinkAlt } from '@fortawesome/free-solid-svg-icons'
+import {
+  faFolderOpen,
+  faCopy,
+  faFilter,
+  faExternalLinkAlt,
+  faPlus,
+  faPlusCircle,
+} from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 
-library.add(faFolderOpen, faCopy, faFilter, faExternalLinkAlt)
+library.add(faFolderOpen, faCopy, faFilter, faExternalLinkAlt, faPlusCircle)
 Vue.component('font-awesome-icon', FontAwesomeIcon)
 
 Vue.config.productionTip = false

@@ -90,6 +90,7 @@
         private editValueDone(e: any) {
             appStore.setItemValue({
                 itemGroupName: this.groupName,
+                itemKey: this.item.key,
                 prev: this.item.value,
                 after: e.target.value,
             })

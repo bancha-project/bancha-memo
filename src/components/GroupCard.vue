@@ -14,6 +14,9 @@
                      u(v-html="title")
         div(v-for="item in itemGroup.items")
             ItemField(:groupName="itemGroup.name" :item="item")
+        div.add-item
+            font-awesome-icon(icon="plus-circle" @click="addItem")
+
 </template>
 
 <script lang="ts">
@@ -53,5 +56,22 @@
         private blur(el: any) {
             el.target.blur()
         }
+
+        private addItem() {
+            appStore.addItem({itemGroupName: this.itemGroup.name})
+            appStore.save()
+        }
     }
 </script>
+
+<style>
+    .box {
+        position: relative;
+    }
+
+    .add-item {
+        position: absolute;
+        bottom: 10px;
+        right: 10px;
+    }
+</style>

@@ -121,13 +121,13 @@ class StoreModule extends VuexModule {
     }
 
     @Mutation
-    public setItemValue(param: {itemGroupName: string, prev: string, after: string}) {
+    public setItemValue(param: {itemGroupName: string, itemKey: string, prev: string, after: string}) {
         const targetItemGroup = this.itemGroups.find((itemGroup) => {
             return itemGroup.name === param.itemGroupName
         })
         if (targetItemGroup) {
             const target = targetItemGroup.items.find((item) => {
-                return item.value === param.prev
+                return item.key === param.itemKey
             })
 
             if (target) {
@@ -149,6 +149,19 @@ class StoreModule extends VuexModule {
             itemGroupObject[itemGroup.name] = itemObject
         }
         FileUtils.saveYaml(filepath, itemGroupObject)
+    }
+
+    @Action
+    public addItem(param: {itemGroupName: string}) {
+        const targetItemGroup = this.itemGroups.find((itemGroup) => {
+            return itemGroup.name === param.itemGroupName
+        })
+        if (targetItemGroup) {
+            targetItemGroup.items.push({
+                key: 'たった今追加されたアイテム',
+                value: '',
+            })
+        }
     }
 }
 
