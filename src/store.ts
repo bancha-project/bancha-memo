@@ -5,11 +5,21 @@ import ElectronStore from 'electron-store'
 import ItemGroup from '@/domain/ItemGroup'
 import Item from '@/domain/Item'
 import FileUtils from '@/utils/FileUtils'
+import ItemFactory from '@/domain/ItemFactory'
+import ItemGroupFactory from '@/domain/ItemGroupFactory'
 
 Vue.use(Vuex)
 
 const store = new Vuex.Store({})
 export default store
+
+function findItemGroupByName(name: string, itemGroups: ItemGroup[]): ItemGroup | undefined {
+    return itemGroups.find((itemGroup) => itemGroup.name === name)
+}
+
+function findItemByKey(key: string, items: Item[]): Item | undefined {
+    return items.find((item) => item.key === key)
+}
 
 @Module({ store, dynamic: true,  name: 'storeModule' })
 class StoreModule extends VuexModule {
@@ -34,18 +44,7 @@ class StoreModule extends VuexModule {
     @Action
     public loadYamlFromFile(filepath: string) {
         const yaml = FileUtils.loadYaml(filepath)
-        const itemGroups: ItemGroup[] = []
-        for (const groupKey of Object.keys(yaml)) {
-            const groupValue = yaml[groupKey]
-            const itemGroup: ItemGroup = { name: groupKey, items: [] }
-            for (const itemKey of Object.keys(groupValue)) {
-                const itemValue = groupValue[itemKey]
-                const item: Item = { key: itemKey, value: itemValue }
-                itemGroup.items.push(item)
-            }
-            itemGroups.push(itemGroup)
-        }
-
+        const itemGroups = ItemGroupFactory.fromYaml(yaml)
         this.setItemGroups(itemGroups)
         this.electronStore.set(this.FILEPATH_KEY, filepath)
     }
@@ -96,77 +95,50 @@ class StoreModule extends VuexModule {
 
     @Mutation
     public setItemGroupName(param: {prev: string, after: string}) {
-        const target = this.itemGroups.find((itemGroup) => {
-            return itemGroup.name === param.prev
-        })
-        if (target) {
-            target.name = param.after
+        const targetItemGroup = findItemGroupByName(param.prev, this.itemGroups)
+        if (targetItemGroup) {
+            targetItemGroup.name = param.after
         }
     }
 
     @Mutation
     public setItemKey(param: {itemGroupName: string, prev: string, after: string}) {
-        const targetItemGroup = this.itemGroups.find((itemGroup) => {
-            return itemGroup.name === param.itemGroupName
-        })
+        const targetItemGroup = findItemGroupByName(param.itemGroupName, this.itemGroups)
         if (targetItemGroup) {
-            const target = targetItemGroup.items.find((item) => {
-                return item.key === param.prev
-            })
-
-            if (target) {
-                target.key = param.after
+            const targetItem = findItemByKey(param.prev, targetItemGroup.items)
+            if (targetItem) {
+                targetItem.key = param.after
             }
         }
     }
 
     @Mutation
     public setItemValue(param: {itemGroupName: string, itemKey: string, prev: string, after: string}) {
-        const targetItemGroup = this.itemGroups.find((itemGroup) => {
-            return itemGroup.name === param.itemGroupName
-        })
+        const targetItemGroup = findItemGroupByName(param.itemGroupName, this.itemGroups)
         if (targetItemGroup) {
-            const target = targetItemGroup.items.find((item) => {
-                return item.key === param.itemKey
-            })
-
-            if (target) {
-                target.value = param.after
+            const targetItem = findItemByKey(param.prev, targetItemGroup.items)
+            if (targetItem) {
+                targetItem.value = param.after
             }
         }
     }
 
     @Mutation
     public addItem(param: {itemGroupName: string}) {
-        const targetItemGroup = this.itemGroups.find((itemGroup) => {
-            return itemGroup.name === param.itemGroupName
-        })
+        const targetItemGroup = findItemGroupByName(param.itemGroupName, this.itemGroups)
         if (targetItemGroup) {
-            targetItemGroup.items.push({
-                key: 'たった今追加されたアイテム',
-                value: '',
-            })
+            targetItemGroup.items.push(ItemFactory.createNew())
         }
     }
 
     @Mutation
     public addItemGroup() {
-        this.itemGroups.push({
-            name: 'たった今追加されたグループ',
-            items: [
-                {
-                    key: 'たった今追加されたアイテム',
-                    value: '',
-                },
-            ],
-        })
+        this.itemGroups.push(ItemGroupFactory.createNew())
     }
 
     @Mutation
     public deleteItem(param: { itemGroupName: string, itemKey: string}) {
-        const targetItemGroup = this.itemGroups.find((itemGroup) => {
-            return itemGroup.name === param.itemGroupName
-        })
+        const targetItemGroup = findItemGroupByName(param.itemGroupName, this.itemGroups)
         if (targetItemGroup) {
             const idx = targetItemGroup.items.findIndex((item) => item.key === param.itemKey)
             targetItemGroup.items.splice(idx, 1)
