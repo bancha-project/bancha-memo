@@ -35,6 +35,18 @@ class StoreModule extends VuexModule {
         this.itemGroups = itemGroups
     }
 
+    @Mutation
+    public setCondition(condition: string) {
+        this.condition = condition
+    }
+
+    @Action
+    public newFile(filepath: string) {
+        this.electronStore.set(this.FILEPATH_KEY, filepath)
+        this.setItemGroups([])
+        this.setCondition('')
+    }
+
     /**
      * - ファイル選択ダイアログを開き、yamlを選択させる
      * - パスはローカルストレージに保存しておく
@@ -70,11 +82,6 @@ class StoreModule extends VuexModule {
         if (filepath) {
             this.loadYamlFromFile(filepath)
         }
-    }
-
-    @Mutation
-    public setCondition(condition: string) {
-        this.condition = condition
     }
 
     get filteredItemGroups(): ItemGroup[] {
