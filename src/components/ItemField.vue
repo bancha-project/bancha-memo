@@ -1,6 +1,8 @@
 <template lang="pug">
-    .field
-        div
+    .item-field
+        .copy-icon.inline-block
+            font-awesome-icon(icon="copy" @click="() => { copy(item.value) }" :id="id")
+        .key.inline-block.ml-10
             template(v-if="isKeyEditMode")
                 input.input(
                     type="text"
@@ -8,38 +10,20 @@
                     @keydown.enter="blur"
                     :value="this.item.key"
                     v-focus
-                    style="height: 26px; margin: 10px 0;"
                 )
             template(v-else)
-                label.key(v-html="key" @click="isKeyEditMode = true")
-        .control
-            .is-inline-block
-                font-awesome-icon(icon="copy" @click="() => { copy(item.value) }" size="lg" :id="id")
-            .is-inline-block.ml-10(style="width:80%")
-                input.input(
-                    type="text"
-                    :value="item.value"
-                    @blur="editValueDone"
-                    @focus="select"
-                    @keydown.enter="blur"
-                    style="height: 26px;"
-                )
-            .is-inline-block.ml-10
-                font-awesome-icon.delete-icon(icon="times-circle" @click="isDeleteMode = true")
-            .is-inline-block.ml-10(v-if="isLink")
-                a(:href='item.value' target="_blank")
-                    font-awesome-icon(icon="external-link-alt")
-        .modal#delete-modal(:class="{ 'is-active': isDeleteMode}")
-            .modal-background(@click="isDeleteMode = false")
-            .modal-card
-                header.modal-card-head
-                    p.modal-card-title 削除したいというのは本当ですか？
-                section.modal-card-body
-                    p.is-size-3 {{ groupName }}
-                    p.is-size-3 {{ item.key }}: {{ item.value }}
-                    p.has-text-danger ※ 削除すると永遠にあなたの元に帰って来ることはありません
-                footer.modal-card-foot
-                    button.button.is-primary(@click="deleteItem") 削除する
+                span(v-html="key" @click="isKeyEditMode = true")
+        .value.inline-block.ml-10
+            input.input(
+                type="text"
+                :value="item.value"
+                @blur="editValueDone"
+                @focus="select"
+                @keydown.enter="blur"
+                style="width: 400px;"
+            )
+        .delete-icon.inline-block.ml-10
+            font-awesome-icon.delete-icon(icon="times-circle" @click="deleteItem")
 </template>
 
 <script lang="ts">
@@ -59,8 +43,6 @@
         @Prop() private readonly item!: Item
 
         private isKeyEditMode = false
-
-        private isDeleteMode = false
 
         private copy(s: string) {
             anime({ targets: `#${this.id}`, ...hurricane })
@@ -107,23 +89,18 @@
             el.target.blur()
         }
 
-        get isLink(): boolean {
-            return this.item.value.indexOf('http') === 0
-        }
-
         private deleteItem() {
-            appStore.deleteItem({itemGroupName: this.groupName, itemKey: this.item.key})
-            appStore.save()
-            this.isDeleteMode = false
+            if (window.confirm('本当に削除したい？')) {
+                appStore.deleteItem({itemGroupName: this.groupName, itemKey: this.item.key})
+                appStore.save()
+            }
         }
     }
 </script>
 
 <style>
-    .key {
-        margin-top: 10px;
-        display: block;
-        font-weight: bold;
+    .item-field {
+        /*border: 1px solid blue;*/
     }
 
     .delete-icon {

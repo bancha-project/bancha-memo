@@ -27,11 +27,13 @@
 </script>
 
 <style lang="scss">
-    $footer-background-color: white;
-    @import "../node_modules/bulma/bulma.sass";
-
     html{
         scroll-behavior: smooth;
+    }
+
+    p {
+        padding: 0;
+        margin: 0;
     }
 
     .pt-20 {
@@ -52,5 +54,9 @@
 
     .hover-grey:hover {
         color: grey;
+    }
+
+    .inline-block {
+        display: inline-block;
     }
 </style>

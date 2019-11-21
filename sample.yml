@@ -1,16 +1,16 @@
 site1:
   aaa: testman
-  bbb: testpass
-  ccc: https://site1.com
+  ddd: bbb
 ahyaemon's page:
   ID: ahyaemon
-  Password: MyPassword
-  URL: https://ahyaemon.com/aaa/bbb/ccc/ddd/eee/fff
+  URL: 'https://ahyaemon.com/aaa/bbb/ccc/ddd/eee/fff'
 ahyaemon's super libre land:
   ID: ahyaemon
   Password: MyPassword
-  URL: https://ahyaemon.com/aaa/bbb/ccc/ddd/eee/fff
+  URL: 'https://ahyaemon.com/aaa/bbb/ccc/ddd/eee/fff'
 bancha-books:
   user: bancha
   pass: bancha
-  uri: https://bancha-books.com
+  uri: 'https://bancha-books.com'
+たった今追加されたグループ:
+  たった今追加されたアイテム: ''

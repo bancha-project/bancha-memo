@@ -1,12 +1,8 @@
 <template lang="pug">
-    header.hero.is-dark
-        .hero-body
-            .container
-                h1.title
-                    span bancha memo
-                    font-awesome-icon.hover-grey.ml-10(icon="file" @click="create")
-                    font-awesome-icon.hover-grey.ml-10(icon="folder-open" @click="load")
-                h2.subtitle copy memo quickly
+    header
+        span bancha memo
+        font-awesome-icon.hover-grey.ml-10(icon="file" @click="create")
+        font-awesome-icon.hover-grey.ml-10(icon="folder-open" @click="load")
 </template>
 
 <script lang="ts">

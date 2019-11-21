@@ -1,6 +1,6 @@
 <template lang="pug">
-    .box(style="background-color: #fafafa;")
-        div
+    .group-card
+        .title
             template(v-if="isTitleEditMode")
                 input.input(
                     type="text"
@@ -10,25 +10,14 @@
                     v-focus
                 )
             template(v-else)
-                p.title.is-6(@click="isTitleEditMode = true")
+                p.title(@click="isTitleEditMode = true")
                      u(v-html="title")
-        div(v-for="item in itemGroup.items")
+        .item(v-for="item in itemGroup.items")
             ItemField(:groupName="itemGroup.name" :item="item")
-        div.delete-group
-            font-awesome-icon(icon="times-circle" @click="isDeleteMode = true")
-        div.add-item
+        .delete-icon.delete-group
+            font-awesome-icon(icon="times-circle" @click="deleteItem")
+        .add-icon.add-item
             font-awesome-icon(icon="plus-circle" @click="addItem")
-        .modal#delete-modal(:class="{ 'is-active': isDeleteMode}")
-            .modal-background(@click="isDeleteMode = false")
-            .modal-card
-                header.modal-card-head
-                    p.modal-card-title 削除したいというのは本当ですか？
-                section.modal-card-body
-                    p.is-size-3 {{ itemGroup.name }}
-                    p.has-text-danger ※ 削除すると永遠にあなたの元に帰って来ることはありません
-                footer.modal-card-foot
-                    button.button.is-primary(@click="deleteItem") 削除する
-
 </template>
 
 <script lang="ts">
@@ -84,7 +73,9 @@
 </script>
 
 <style>
-    .box {
+    .group-card {
+        padding: 10px;
+        border-bottom: 1px solid grey;
         position: relative;
     }
 
