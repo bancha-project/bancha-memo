@@ -24,9 +24,9 @@
                 filters: [
                     {
                         name: 'yaml',
-                        extensions: ['yml']
-                    }
-                ]
+                        extensions: ['yml'],
+                    },
+                ],
             })
             if (filepath) {
                 appStore.newFile(filepath)

@@ -21,6 +21,10 @@ function findItemByKey(key: string, items: Item[]): Item | undefined {
     return items.find((item) => item.key === key)
 }
 
+function findItemByValue(value: string, items: Item[]): Item | undefined {
+    return items.find((item) => item.value === value)
+}
+
 @Module({ store, dynamic: true,  name: 'storeModule' })
 class StoreModule extends VuexModule {
 
@@ -123,7 +127,7 @@ class StoreModule extends VuexModule {
     public setItemValue(param: {itemGroupName: string, itemKey: string, prev: string, after: string}) {
         const targetItemGroup = findItemGroupByName(param.itemGroupName, this.itemGroups)
         if (targetItemGroup) {
-            const targetItem = findItemByKey(param.prev, targetItemGroup.items)
+            const targetItem = findItemByValue(param.prev, targetItemGroup.items)
             if (targetItem) {
                 targetItem.value = param.after
             }
