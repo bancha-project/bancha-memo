@@ -3,7 +3,7 @@
         .copy-area
             input#copy-area.hidden(type="text")
         .filter
-            input(type="text" placeholder="filter" :value="condition" @input="changeCondition")
+            input#filter(type="text" placeholder="filter" :value="condition" @input="changeCondition")
         .group(v-for="itemGroup in itemGroups")
             GroupCard(:itemGroup="itemGroup")
         .add-icon.add-group

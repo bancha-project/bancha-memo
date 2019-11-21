@@ -20,8 +20,27 @@
         },
     })
     export default class App extends Vue {
+
+        private created() {
+            window.addEventListener('keydown', this.keydown)
+        }
+
         private mounted() {
             appStore.init()
+        }
+
+        private destroyed() {
+            window.removeEventListener('keydown', this.keydown)
+        }
+
+        private keydown(e: KeyboardEvent) {
+            if (e.ctrlKey && e.key == 's') {
+                (document.getElementById('filter') as HTMLInputElement).focus()
+            } else if ((e.ctrlKey && e.key === 'p') || (e.key === 'ArrowUp')) {
+                console.log('up')
+            } else if ((e.ctrlKey && e.key === 'n') || (e.key === 'ArrowDown')) {
+                console.log('down')
+            }
         }
     }
 </script>
