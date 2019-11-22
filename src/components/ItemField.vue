@@ -1,7 +1,7 @@
 <template lang="pug">
     .item-field
         .copy-icon.inline-block
-            font-awesome-icon(icon="copy" @click="() => { copy(item.value) }" :id="id")
+            font-awesome-icon(icon="copy" :id="id")
         .key.inline-block.ml-10
             template(v-if="isKeyEditMode")
                 input.input(
@@ -44,11 +44,6 @@
 
         private isKeyEditMode = false
 
-        private copy(s: string) {
-            anime({ targets: `#${this.id}`, ...hurricane })
-            appStore.copy(s)
-        }
-
         get id(): string {
             const digest = calcMdDigest(this.groupName + this.item.key)
             return 'copy-icon-' + digest.substring(0, 8)
@@ -73,6 +68,7 @@
 
         private select(el: any) {
             el.target.select()
+            document.execCommand('copy')
         }
 
         private editValueDone(e: any) {
@@ -99,10 +95,6 @@
 </script>
 
 <style>
-    .item-field {
-        /*border: 1px solid blue;*/
-    }
-
     .delete-icon {
         color: #ff777e;
     }

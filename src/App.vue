@@ -34,12 +34,8 @@
         }
 
         private keydown(e: KeyboardEvent) {
-            if (e.ctrlKey && e.key == 's') {
+            if (e.ctrlKey && e.key === 's') {
                 (document.getElementById('filter') as HTMLInputElement).focus()
-            } else if ((e.ctrlKey && e.key === 'p') || (e.key === 'ArrowUp')) {
-                console.log('up')
-            } else if ((e.ctrlKey && e.key === 'n') || (e.key === 'ArrowDown')) {
-                console.log('down')
             }
         }
     }
@@ -77,5 +73,9 @@
 
     .inline-block {
         display: inline-block;
+    }
+
+    .background-warning {
+        background-color: yellow;
     }
 </style>

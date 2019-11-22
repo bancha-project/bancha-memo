@@ -11,8 +11,8 @@
                 )
             template(v-else)
                 p.title(@click="isTitleEditMode = true")
-                     u(v-html="title")
-        .item(v-for="item in itemGroup.items")
+                     span(v-html="title")
+        .item(v-for="item in itemGroup.items" style="margin-top: 4px;")
             ItemField(:groupName="itemGroup.name" :item="item")
         .delete-icon.delete-group
             font-awesome-icon(icon="times-circle" @click="deleteItem")
@@ -37,8 +37,6 @@
         @Prop() private readonly itemGroup!: ItemGroup
 
         private isTitleEditMode = false
-
-        private isDeleteMode = false
 
         get title() {
             if (appStore.condition === '') {
@@ -66,13 +64,23 @@
         }
 
         private deleteItem() {
-            appStore.deleteItemGroup({ itemGroupName: this.itemGroup.name })
-            appStore.save()
+            if (window.confirm('本当に削除したい？')) {
+                appStore.deleteItemGroup({itemGroupName: this.itemGroup.name})
+                appStore.save()
+            }
         }
     }
 </script>
 
 <style>
+    .title {
+        font-size: 14px;
+    }
+
+    .item {
+        font-size: 11px;
+    }
+
     .group-card {
         padding: 10px;
         border-bottom: 1px solid grey;

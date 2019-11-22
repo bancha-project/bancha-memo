@@ -66,18 +66,6 @@ class StoreModule extends VuexModule {
     }
 
     /**
-     * - アイコンがクリックされた値をコピーする
-     * @param s
-     */
-    @Action
-    public copy(s: string) {
-        const copyArea = document.getElementById('copy-area')! as HTMLInputElement
-        copyArea.value = s
-        copyArea.select()
-        document.execCommand('copy')
-    }
-
-    /**
      * - ローカルストレージにyamlのパスが保存してある場合、それをロードする
      */
     @Action

@@ -4,6 +4,6 @@ export default class DomUtils {
         const sp = original.split(word)
         return sp.map((s: string) => {
             return `<span>${s}</span>`
-        }).join(`<span class="has-background-warning">${word}</span>`)
+        }).join(`<b class="background-warning">${word}</b>`)
     }
 }
